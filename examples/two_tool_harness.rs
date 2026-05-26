@@ -8,12 +8,11 @@
 //! - the harness owns its tools as `Arc`s and clones them out cheaply,
 //! - a system prompt is provided so the persona is visible end-to-end.
 
-use std::future::Future;
-use std::pin::Pin;
 use std::sync::Arc;
 
+use async_trait::async_trait;
 use motosan_agent_harness::Harness;
-use motosan_agent_tool::{Tool, ToolContext, ToolDef, ToolResult, Value};
+use motosan_agent_tool::{Tool, ToolAnnotations, ToolContext, ToolDef, ToolOutput, Value};
 
 // ---------------------------------------------------------------------------
 // Stub tools
@@ -22,6 +21,7 @@ use motosan_agent_tool::{Tool, ToolContext, ToolDef, ToolResult, Value};
 /// Echoes back its `message` argument as text.
 struct EchoTool;
 
+#[async_trait]
 impl Tool for EchoTool {
     fn def(&self) -> ToolDef {
         ToolDef {
@@ -37,25 +37,25 @@ impl Tool for EchoTool {
         }
     }
 
-    fn call(
-        &self,
-        args: Value,
-        _ctx: &ToolContext,
-    ) -> Pin<Box<dyn Future<Output = ToolResult> + Send + '_>> {
-        Box::pin(async move {
-            let msg = args
-                .get("message")
-                .and_then(Value::as_str)
-                .unwrap_or("")
-                .to_string();
-            ToolResult::text(msg)
-        })
+    fn annotations(&self) -> ToolAnnotations {
+        ToolAnnotations {
+            read_only: true,
+            destructive: false,
+            network_access: false,
+            idempotent: true,
+        }
+    }
+
+    async fn call(&self, args: Value, _ctx: &ToolContext) -> ToolOutput {
+        let msg = args.get("message").and_then(Value::as_str).unwrap_or("");
+        ToolOutput::text(msg)
     }
 }
 
 /// Adds two integers `a` and `b`.
 struct AddTool;
 
+#[async_trait]
 impl Tool for AddTool {
     fn def(&self) -> ToolDef {
         ToolDef {
@@ -72,16 +72,19 @@ impl Tool for AddTool {
         }
     }
 
-    fn call(
-        &self,
-        args: Value,
-        _ctx: &ToolContext,
-    ) -> Pin<Box<dyn Future<Output = ToolResult> + Send + '_>> {
-        Box::pin(async move {
-            let a = args.get("a").and_then(Value::as_i64).unwrap_or(0);
-            let b = args.get("b").and_then(Value::as_i64).unwrap_or(0);
-            ToolResult::json(serde_json::json!({ "sum": a + b }))
-        })
+    fn annotations(&self) -> ToolAnnotations {
+        ToolAnnotations {
+            read_only: true,
+            destructive: false,
+            network_access: false,
+            idempotent: true,
+        }
+    }
+
+    async fn call(&self, args: Value, _ctx: &ToolContext) -> ToolOutput {
+        let a = args.get("a").and_then(Value::as_i64).unwrap_or(0);
+        let b = args.get("b").and_then(Value::as_i64).unwrap_or(0);
+        ToolOutput::text((a + b).to_string())
     }
 }
 

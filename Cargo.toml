@@ -1,6 +1,6 @@
 [package]
 name = "motosan-agent-harness"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/motosan-dev/motosan-agent-harness"
@@ -15,4 +15,5 @@ motosan-agent-primitives = { path = "../motosan-agent-primitives" }
 motosan-agent-tool = { path = "../motosan-agent-tool" }
 
 [dev-dependencies]
+async-trait = "0.1"
 serde_json = "1"

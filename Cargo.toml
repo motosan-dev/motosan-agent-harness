@@ -1,0 +1,18 @@
+[package]
+name = "motosan-agent-harness"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/motosan-dev/motosan-agent-harness"
+homepage = "https://github.com/motosan-dev/motosan-agent-harness"
+description = "Composition contract for vertical Motosan agent bundles — the Harness trait"
+authors = ["motosan-dev"]
+keywords = ["ai", "agent", "harness", "llm"]
+categories = ["development-tools"]
+
+[dependencies]
+motosan-agent-primitives = { path = "../motosan-agent-primitives" }
+motosan-agent-tool = { path = "../motosan-agent-tool" }
+
+[dev-dependencies]
+serde_json = "1"

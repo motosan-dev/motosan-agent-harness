@@ -1,6 +1,15 @@
+[workspace]
+members = [".", "finance"]
+resolver = "2"
+
+[workspace.dependencies]
+motosan-agent-primitives = { version = "0.1.1", path = "../motosan-agent-primitives" }
+motosan-agent-tool = { version = "0.4.0", path = "../motosan-agent-tool" }
+async-trait = "0.1"
+
 [package]
 name = "motosan-agent-harness"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/motosan-dev/motosan-agent-harness"
@@ -11,9 +20,9 @@ keywords = ["ai", "agent", "harness", "llm"]
 categories = ["development-tools"]
 
 [dependencies]
-motosan-agent-primitives = { path = "../motosan-agent-primitives" }
-motosan-agent-tool = { path = "../motosan-agent-tool" }
+motosan-agent-primitives.workspace = true
+motosan-agent-tool.workspace = true
 
 [dev-dependencies]
-async-trait = "0.1"
+async-trait.workspace = true
 serde_json = "1"

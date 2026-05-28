@@ -91,7 +91,13 @@ use motosan_agent_tool::Tool;
 ///
 /// # Example
 ///
-/// ```
+/// (Marked `ignore` because the link step pulls `libiconv` via transitive
+/// `chrono` / `iana_time_zone` deps, and that lookup fails on environments
+/// where the macOS SDK lib path isn't on the linker search path. The
+/// example still serves as documentation; runnable coverage is in
+/// `tests/` and the `examples/` binaries.)
+///
+/// ```ignore
 /// use std::sync::Arc;
 /// use motosan_agent_harness::Harness;
 /// use motosan_agent_tool::Tool;

@@ -2,6 +2,14 @@
 
 `motosan-agent-harness-finance` — finance vertical harness for the Motosan agent framework.
 
+## 0.2.0 — 2026-05-29
+
+CHANGED (breaking):
+- Bumped `motosan-agent-primitives` to 0.2.0 and `motosan-agent-tool` to 0.5.0; bumped path/version of `motosan-agent-harness` to 0.2.0.
+- `AuditLogHook::post_tool_use_failure` now records `ctx.result` (the real `ToolResult` the model sees) directly, dropping the synthetic `{ "failure": ... }` wrapper. Closes [AWKWARDNESS.md #3](AWKWARDNESS.md) (M10 D-M10-2).
+- Finance tools now expose a distinct host-side `internal_name`: `finance.get_quote` / `finance.get_position` / `finance.place_order`. The LLM-facing `name` is unchanged (`get_quote` / `get_position` / `place_order`), preserving M9 prompt and provider compatibility. Closes [AWKWARDNESS.md #4](AWKWARDNESS.md) (M10 D-M10-4).
+- `FinanceApprovalPolicy` test helper updated for the new `PermissionContext { recent_messages: &[Message] }` field added in primitives 0.2.0 (M10 D-M10-3); no behavior change for the policy itself.
+
 ## 0.1.0 — 2026-05-29
 
 Initial release.

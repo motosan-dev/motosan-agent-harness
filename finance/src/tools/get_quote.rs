@@ -10,17 +10,21 @@ pub struct GetQuoteTool;
 #[async_trait]
 impl Tool for GetQuoteTool {
     fn def(&self) -> ToolDef {
-        ToolDef {
-            name: "get_quote".into(),
-            description: "Return the current mock market price for a stock symbol.".into(),
-            input_schema: json!({
+        // M10 D-M10-4: keep the LLM-facing `name` short and unqualified, but
+        // use a namespaced `internal_name` host-side to avoid collisions when
+        // multiple harnesses are stacked. AWK#4 resolved.
+        ToolDef::new(
+            "get_quote",
+            "Return the current mock market price for a stock symbol.",
+            json!({
                 "type": "object",
                 "properties": {
                     "symbol": { "type": "string", "description": "Ticker symbol, e.g. AAPL" }
                 },
                 "required": ["symbol"]
             }),
-        }
+        )
+        .with_internal_name("finance.get_quote")
     }
 
     fn annotations(&self) -> ToolAnnotations {

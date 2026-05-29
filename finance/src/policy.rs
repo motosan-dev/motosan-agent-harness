@@ -52,6 +52,10 @@ mod tests {
             tool_input: input,
             annotations,
             mode: PermissionMode::AcceptEdits,
+            // M10 D-M10-3: PermissionContext gained `recent_messages` in
+            // primitives 0.2.0. Empty slice = cold start, sufficient for
+            // policy tests that don't depend on conversation history.
+            recent_messages: &[],
         }
     }
 

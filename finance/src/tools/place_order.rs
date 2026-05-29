@@ -9,10 +9,11 @@ pub struct PlaceOrderTool;
 #[async_trait]
 impl Tool for PlaceOrderTool {
     fn def(&self) -> ToolDef {
-        ToolDef {
-            name: "place_order".into(),
-            description: "Place a mock stock order. This is destructive and always requires human approval before execution.".into(),
-            input_schema: json!({
+        // M10 D-M10-4: see get_quote — short `name`, namespaced `internal_name`.
+        ToolDef::new(
+            "place_order",
+            "Place a mock stock order. This is destructive and always requires human approval before execution.",
+            json!({
                 "type": "object",
                 "properties": {
                     "symbol": { "type": "string", "description": "Ticker symbol, e.g. AAPL" },
@@ -22,7 +23,8 @@ impl Tool for PlaceOrderTool {
                 },
                 "required": ["symbol", "side", "quantity"]
             }),
-        }
+        )
+        .with_internal_name("finance.place_order")
     }
 
     fn annotations(&self) -> ToolAnnotations {

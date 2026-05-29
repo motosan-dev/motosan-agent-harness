@@ -78,7 +78,7 @@ impl Hook for AuditLogHook {
             "session_id": ctx.session_id,
             "tool": ctx.tool_call.name,
             "args": ctx.tool_call.input,
-            "result": { "failure": ctx.failure },
+            "result": ctx.result,
             "is_error": true,
         }));
         HookResult::cont()
@@ -177,6 +177,11 @@ mod tests {
             failure: ToolFailure::Error {
                 message: "permission denied".into(),
             },
+            result: ToolResult {
+                tool_use_id: "call-2".into(),
+                content: vec![ContentBlock::Text { text: "permission denied".into() }],
+                is_error: true,
+            },
             cancellation_token: Default::default(),
         }));
 
@@ -187,6 +192,8 @@ mod tests {
         assert_eq!(value["event"], "post_tool_use_failure");
         assert_eq!(value["tool"], "place_order");
         assert_eq!(value["is_error"], true);
-        assert_eq!(value["result"]["failure"]["kind"], "error");
+        // AWK#3 / D-M10-2: result is the real ToolResult, not a {failure} wrapper.
+        assert_eq!(value["result"]["is_error"], true);
+        assert_eq!(value["result"]["content"][0]["text"], "permission denied");
     }
 }

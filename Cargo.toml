@@ -3,13 +3,13 @@ members = [".", "finance"]
 resolver = "2"
 
 [workspace.dependencies]
-motosan-agent-primitives = { version = "0.1.1", path = "../motosan-agent-primitives" }
-motosan-agent-tool = { version = "0.4.0", path = "../motosan-agent-tool" }
+motosan-agent-primitives = { version = "0.2.0", path = "../motosan-agent-primitives" }
+motosan-agent-tool = { version = "0.5.0", path = "../motosan-agent-tool" }
 async-trait = "0.1"
 
 [package]
 name = "motosan-agent-harness"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/motosan-dev/motosan-agent-harness"

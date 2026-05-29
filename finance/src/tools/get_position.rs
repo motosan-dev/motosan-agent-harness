@@ -9,17 +9,19 @@ pub struct GetPositionTool;
 #[async_trait]
 impl Tool for GetPositionTool {
     fn def(&self) -> ToolDef {
-        ToolDef {
-            name: "get_position".into(),
-            description: "Return current mock portfolio holdings and cost basis for a stock symbol. Unknown symbols return a flat position.".into(),
-            input_schema: json!({
+        // M10 D-M10-4: see get_quote — short `name`, namespaced `internal_name`.
+        ToolDef::new(
+            "get_position",
+            "Return current mock portfolio holdings and cost basis for a stock symbol. Unknown symbols return a flat position.",
+            json!({
                 "type": "object",
                 "properties": {
                     "symbol": { "type": "string", "description": "Ticker symbol, e.g. AAPL" }
                 },
                 "required": ["symbol"]
             }),
-        }
+        )
+        .with_internal_name("finance.get_position")
     }
 
     fn annotations(&self) -> ToolAnnotations {

@@ -24,17 +24,17 @@ struct EchoTool;
 #[async_trait]
 impl Tool for EchoTool {
     fn def(&self) -> ToolDef {
-        ToolDef {
-            name: "demo.echo".into(),
-            description: "Echo the input message back to the caller.".into(),
-            input_schema: serde_json::json!({
+        ToolDef::new(
+            "demo.echo",
+            "Echo the input message back to the caller.",
+            serde_json::json!({
                 "type": "object",
                 "properties": {
                     "message": { "type": "string" }
                 },
                 "required": ["message"]
             }),
-        }
+        )
     }
 
     fn annotations(&self) -> ToolAnnotations {
@@ -58,10 +58,10 @@ struct AddTool;
 #[async_trait]
 impl Tool for AddTool {
     fn def(&self) -> ToolDef {
-        ToolDef {
-            name: "demo.add".into(),
-            description: "Add two integers a and b.".into(),
-            input_schema: serde_json::json!({
+        ToolDef::new(
+            "demo.add",
+            "Add two integers a and b.",
+            serde_json::json!({
                 "type": "object",
                 "properties": {
                     "a": { "type": "integer" },
@@ -69,7 +69,7 @@ impl Tool for AddTool {
                 },
                 "required": ["a", "b"]
             }),
-        }
+        )
     }
 
     fn annotations(&self) -> ToolAnnotations {

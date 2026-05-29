@@ -3,9 +3,16 @@ name = "motosan-agent-harness-finance"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
+repository = "https://github.com/motosan-dev/motosan-agent-harness"
+homepage = "https://github.com/motosan-dev/motosan-agent-harness"
+documentation = "https://docs.rs/motosan-agent-harness-finance"
+description = "Finance vertical harness for Motosan agent framework — get_quote, place_order, FinanceApprovalPolicy, AuditLogHook"
+authors = ["motosan-dev"]
+keywords = ["ai", "agent", "harness", "finance", "llm"]
+categories = ["development-tools"]
 
 [dependencies]
-motosan-agent-harness = { path = ".." }
+motosan-agent-harness = { path = "..", version = "0.1.2" }
 motosan-agent-primitives.workspace = true
 motosan-agent-tool.workspace = true
 async-trait.workspace = true

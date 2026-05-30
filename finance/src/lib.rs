@@ -95,7 +95,7 @@ mod tests {
         let tool_names: Vec<String> = FinanceHarness::new()
             .tools()
             .into_iter()
-            .map(|tool| tool.def().name)
+            .map(|tool| tool.def().name.clone())
             .collect();
 
         assert_eq!(tool_names, vec!["get_quote", "get_position", "place_order"]);

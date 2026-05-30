@@ -4,7 +4,7 @@ resolver = "2"
 
 [workspace.dependencies]
 motosan-agent-primitives = { version = "0.4.0", path = "../motosan-agent-primitives" }
-motosan-agent-tool = { version = "0.6.0", path = "../motosan-agent-tool" }
+motosan-agent-tool = { version = "0.7.0", path = "../motosan-agent-tool" }
 async-trait = "0.1"
 
 [package]

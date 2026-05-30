@@ -25,7 +25,7 @@ struct EchoTool;
 impl Tool for EchoTool {
     fn def(&self) -> ToolDef {
         ToolDef::new(
-            "demo.echo",
+            "demo_echo",
             "Echo the input message back to the caller.",
             serde_json::json!({
                 "type": "object",
@@ -35,6 +35,7 @@ impl Tool for EchoTool {
                 "required": ["message"]
             }),
         )
+        .with_internal_name("demo.echo")
     }
 
     fn annotations(&self) -> ToolAnnotations {
@@ -59,7 +60,7 @@ struct AddTool;
 impl Tool for AddTool {
     fn def(&self) -> ToolDef {
         ToolDef::new(
-            "demo.add",
+            "demo_add",
             "Add two integers a and b.",
             serde_json::json!({
                 "type": "object",
@@ -70,6 +71,7 @@ impl Tool for AddTool {
                 "required": ["a", "b"]
             }),
         )
+        .with_internal_name("demo.add")
     }
 
     fn annotations(&self) -> ToolAnnotations {

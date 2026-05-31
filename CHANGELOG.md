@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+FIXED:
+- `examples/two_tool_harness.rs`: the demo tools' model-visible names were
+  `demo.echo` / `demo.add` — the dot is rejected by Anthropic
+  (`^[a-zA-Z0-9_-]{1,128}$`) and now panics at `motosan-agent-loop` 0.32's
+  build-time tool-name gate. Renamed the model-visible names to `demo_echo` /
+  `demo_add` and moved the `demo.` namespace into `internal_name` (host-side,
+  never sent to the LLM). Found by a workspace-wide wire-safe-name sweep.
+
 ## 0.2.0 — 2026-05-29
 
 CHANGED (breaking):
